@@ -101,7 +101,9 @@ class Waktu{
     }
 
     public float lamaLari(){
-        float totalMenit = (this.jamSelesai - this.jamMulai)*60 + (this.menitSelesai - this.menitMulai) + (float)(this.detikSelesai - this.detikMulai)/60;
+        float jam = this.jamSelesai - this.jamMulai;
+        jam = (jam < 0)? jam+24 : jam;
+        float totalMenit = jam*60 + (this.menitSelesai - this.menitMulai) + (float)(this.detikSelesai - this.detikMulai)/60;
         return totalMenit;
     }
 
