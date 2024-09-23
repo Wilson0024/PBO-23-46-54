@@ -4,19 +4,16 @@ class Waktu{
 
     private String nama;
     private String npm;
-    private int jamMulai, jamSelesai;
-    private int menitMulai , menitSelesai;
-    private int detikMulai, detikSelesai;
+    private int jam;
+    private int menit;
+    private int detik;
 
     public Waktu(){
         this.nama = "";
         this.npm = "";
-        this.jamMulai = 0;
-        this.menitMulai = 0;
-        this.detikMulai = 0;
-        this.jamSelesai = 0;
-        this.menitSelesai = 0;
-        this.detikSelesai = 0;
+        this.jam = 0;
+        this.menit = 0;
+        this.detik = 0;
     }
 
     public void setNama(){
@@ -29,33 +26,18 @@ class Waktu{
         this.npm = sc.nextLine();
     }
 
-    public void setJamMulai(){
-        this.jamMulai = inputBatas("Masukkan Jam Mulai (0-23): ", 0, 23);
+    public void setJam(){
+        this.jam = inputBatas("Masukkan Jam (0-23): ", 0, 23);
     }
 
-    public void setMenitMulai(){
-        this.menitMulai = inputBatas("Masukkan Menit Mulai (0-59): ", 0, 59);
-
-    }
-
-    public void setDetikMulai(){
-        this.detikMulai = inputBatas("Masukkan Detik Mulai (0-59): ", 0, 59);
+    public void setMenit(){
+        this.menit = inputBatas("Masukkan Menit (0-59): ", 0, 59);
 
     }
 
-    public void setJamSelesai(){
-        this.jamSelesai = inputBatas("Masukkan Jam Selesai (0-23): ", 0, 23);
+    public void setDetik(){
+        this.detik = inputBatas("Masukkan Detik (0-59): ", 0, 59);
 
-    }
-
-    public void setMenitSelesai(){
-        this.menitSelesai = inputBatas("Masukkan Menit Selesai (0-59): ", 0, 59);
-
-    }
-
-    public void setDetikSelesai(){
-        this.detikSelesai = inputBatas("Masukkan Detik Selesai (0-59): ", 0, 59);
-        
     }
 
     public int inputBatas(String kata, int min, int max){
@@ -68,28 +50,16 @@ class Waktu{
         return data;
     }
 
-    public int getDetikMulai(){
-        return this.detikMulai;
+    public int getDetik(){
+        return this.detik;
     }
 
-    public int getJamMulai(){
-        return this.jamMulai;
+    public int getJam(){
+        return this.jam;
     }
 
-    public int getMenitMulai(){
-        return this.menitMulai;
-    }
-
-    public int getDetikSelesai(){
-        return this.detikSelesai;
-    }
-
-    public int getJamSelesai(){
-        return this.jamSelesai;
-    }
-
-    public int getMenitSelesai(){
-        return this.menitSelesai;
+    public int getMenit(){
+        return this.menit;
     }
 
     public String getNama(){
@@ -100,10 +70,10 @@ class Waktu{
         return this.npm;
     }
 
-    public float lamaLari(){
-        float jam = this.jamSelesai - this.jamMulai;
-        jam = (jam < 0)? jam+24 : jam;
-        float totalMenit = jam*60 + (this.menitSelesai - this.menitMulai) + (float)(this.detikSelesai - this.detikMulai)/60;
+    public float lamaLari(Waktu selesai){
+        float ja = selesai.jam - this.jam;
+        ja = (ja < 0)? ja+24 : ja;
+        float totalMenit = ja*60 + (selesai.menit - this.menit) + (float)(selesai.detik - this.detik)/60;
         return totalMenit;
     }
 
@@ -138,14 +108,14 @@ class Waktu{
     }
 
     // Tampilkan  Nama, NPM, HM, status lulus, waktu mulai, waktu selesai dan lama lari
-    public void tampilan(){
+    public void tampilan(Waktu selesai){
         System.out.println("\n\nNama : " + this.nama);
         System.out.println("NPM : " + this.npm);
-        System.out.println("Huruf Mutu : " + HurufMutu(lamaLari()));
-        System.out.println("Status : " + status(HurufMutu(lamaLari())));
-        System.out.println("Waktu Mulai : " + this.jamMulai + ":" + this.menitMulai + ":" + this.detikMulai);
-        System.out.println("Waktu Selesai : " + this.jamSelesai + ":" + this.menitSelesai + ":" + this.detikSelesai);
-        System.out.println("Lama Lari : " + lamaLari() + " Menit\n\n");
+        System.out.println("Huruf Mutu : " + HurufMutu(lamaLari(selesai)));
+        System.out.println("Status : " + status(HurufMutu(lamaLari(selesai))));
+        System.out.println("Waktu Mulai : " + this.jam + ":" + this.menit + ":" + this.detik);
+        System.out.println("Waktu Selesai : " + selesai.jam + ":" + selesai.menit + ":" + selesai.detik);
+        System.out.println("Lama Lari : " + lamaLari(selesai) + " Menit\n\n");
     }
 }
 
@@ -153,6 +123,7 @@ public class Soal1 {
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         Waktu dataMhs = new Waktu();
+        Waktu selesai = new Waktu();
 
         dataMhs.setNama();
         dataMhs.setNpm();
@@ -160,20 +131,19 @@ public class Soal1 {
         System.out.println("\n\n\tJam Mulai");
         System.out.println("=======================");
 
-        
-        dataMhs.setJamMulai();
-        dataMhs.setMenitMulai();
-        dataMhs.setDetikMulai();
+        dataMhs.setJam();
+        dataMhs.setMenit();
+        dataMhs.setDetik();
 
 
         System.out.println("\n\n\tJam Selesai");
         System.out.println("=======================");
 
-        dataMhs.setJamSelesai();
-        dataMhs.setMenitSelesai();
-        dataMhs.setDetikSelesai();
+        selesai.setJam();
+        selesai.setMenit();
+        selesai.setDetik();
         
-        dataMhs.tampilan();
+        dataMhs.tampilan(selesai);
         sc.close();
     }
 }
