@@ -93,13 +93,7 @@ class Waktu{
     }
 
     public String status(char HurufMutu){
-        if(HurufMutu == 'A'){
-            return "Lulus";
-        }
-        else if(HurufMutu == 'B'){
-            return "Lulus";
-        }
-        else if(HurufMutu == 'C'){
+        if(HurufMutu == 'A' || HurufMutu == 'B' || HurufMutu == 'C'){
             return "Lulus";
         }
         else{
@@ -116,11 +110,11 @@ class Waktu{
         System.out.println("Waktu Mulai : " + this.jam + ":" + this.menit + ":" + this.detik);
         System.out.println("Waktu Selesai : " + selesai.jam + ":" + selesai.menit + ":" + selesai.detik);
         System.out.println("Lama Lari : " + lamaLari(selesai) + " Menit\n\n");
+        sc.close();
     }
 }
 
 public class Soal1 {
-    static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         Waktu dataMhs = new Waktu();
         Waktu selesai = new Waktu();
@@ -144,6 +138,5 @@ public class Soal1 {
         selesai.setDetik();
         
         dataMhs.tampilan(selesai);
-        sc.close();
     }
 }
