@@ -37,7 +37,6 @@ class Waktu{
 
     public void setDetik(){
         this.detik = inputBatas("Masukkan Detik (0-59): ", 0, 59);
-
     }
 
     public int inputBatas(String kata, int min, int max){
