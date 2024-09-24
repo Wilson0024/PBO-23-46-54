@@ -91,5 +91,73 @@ class Waktu{
         return this.tahun;
     }
 
-    
+    public Waktu selisihWaktu(Waktu kedatangan) {
+        Waktu selisih = new Waktu();
+
+        // Selisih Detik
+        if (kedatangan.detik < this.detik) {
+            selisih.menit -= 1;
+            selisih.detik = 60 + kedatangan.detik - this.detik;
+        } else {
+        selisih.detik = kedatangan.detik - this.detik;
+        }
+
+        // Selisih Menit
+        if (kedatangan.menit + selisih.menit < this.menit) {
+            selisih.jam -= 1;
+            selisih.menit += 60 + kedatangan.menit - this.menit;
+        } else {
+            selisih.menit += kedatangan.menit - this.menit;
+        }
+
+        // Selisih Jam
+        if (kedatangan.jam + selisih.jam < this.jam) {
+            selisih.hari -= 1;
+            selisih.jam += 24 + kedatangan.jam - this.jam;
+        } else {
+            selisih.jam += kedatangan.jam - this.jam;
+        }
+
+        // Selisih Hari
+        // Bulan Kedatangan + 1 supaya dapat mengambil banyak hari dalam bulan kedua pada tahun tertentu
+        if(kedatangan.bulan == 3){
+            // Bulan kedua pada saat tahun kabisat
+            if((kedatangan.tahun % 4 == 0 && kedatangan.tahun % 100 != 0) || (kedatangan.tahun % 400 == 0) && (kedatangan.hari + selisih.hari < this.hari)){
+                selisih.bulan -= 1;
+                selisih.hari += 29 + kedatangan.hari - this.hari;
+            } 
+            // Bulan kedua pada biasanya
+            else{
+                selisih.bulan -= 1;
+                selisih.hari += 28 + kedatangan.hari - this.hari;
+            }
+        } 
+        // Mencari 31 hari pada bulan tertentu (1,3,5,7,8,10,12)
+        else if((kedatangan.bulan % 2 == 0 && kedatangan.bulan <= 7) || (kedatangan.bulan % 2 == 1 && kedatangan.bulan <= 12 && (kedatangan.bulan > 7 || kedatangan.bulan == 1)) && (kedatangan.hari + selisih.hari < this.hari)){
+            selisih.bulan -= 1;
+            selisih.hari += 31 + kedatangan.hari - this.hari;
+        } 
+        // Mencari 30 hari pada bulan tertentu (4,6,9,11)
+        else if(kedatangan.hari + selisih.hari < this.hari){
+            selisih.bulan -= 1;
+            selisih.hari += 30 + kedatangan.hari - this.hari; 
+        }
+        else {
+            selisih.hari += kedatangan.hari - this.hari;
+        }        
+
+        // Selisih Bulan
+        if (kedatangan.bulan + selisih.bulan < this.bulan) {
+            selisih.tahun -= 1;
+            selisih.bulan += 12 + kedatangan.bulan - this.bulan;
+        } else {
+            selisih.bulan += kedatangan.bulan - this.bulan;
+        }
+
+        // Selisih Tahun
+        // Error handling ketika kedatangan.tahun < this.tahun belum ada
+        selisih.tahun += kedatangan.tahun - this.tahun;
+
+        return selisih;
+    }
 }
