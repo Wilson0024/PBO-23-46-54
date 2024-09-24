@@ -90,4 +90,6 @@ class Waktu{
     public int getTahun() {
         return this.tahun;
     }
+
+    
 }
