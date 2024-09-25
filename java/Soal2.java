@@ -52,8 +52,7 @@ class Waktu{
             this.hari = inputBatas("Hari (1-30) : ", 1, 30); 
         }
     }
-    
-    
+     
     public void setJam(){
         this.jam = inputBatas("Masukkan Jam (0-23): ", 0, 23);
     }
