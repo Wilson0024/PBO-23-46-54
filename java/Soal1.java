@@ -1,3 +1,11 @@
+/*
+ * Anggota Kelompok :
+ * - Wilson Angelie Tan (140810230024)
+ * - Stan Fedheric (140810230046)
+ * - Theopillus Samuel Ghozalli (140810230054)
+ * 
+ * Deskripsi : Soal 1 dalam Bahasa Pemograman Java
+ */
 import java.util.Scanner;
 class Waktu{
     static Scanner sc = new Scanner(System.in);
