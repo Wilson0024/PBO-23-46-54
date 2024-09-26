@@ -51,26 +51,26 @@ class Waktu:
     def selisih_waktu(self, kedatangan):
         selisih = Waktu()
 
-        if kedatangan.detik < self.__detik:
-            kedatangan.menit -= 1
-            selisih.__detik = 60 + kedatangan.detik - self.__detik
+        if kedatangan.__detik < self.__detik:
+            kedatangan.__menit -= 1
+            selisih.__detik = 60 + kedatangan.__detik - self.__detik
         else:
-            selisih.__detik = kedatangan.detik - self.__detik
+            selisih.__detik = kedatangan.__detik - self.__detik
 
-        if kedatangan.menit < self.__menit:
-            kedatangan.jam -= 1
-            selisih.__menit = 60 + kedatangan.menit - self.__menit
+        if kedatangan.__menit < self.__menit:
+            kedatangan.__jam -= 1
+            selisih.__menit = 60 + kedatangan.__menit - self.__menit
         else:
-            selisih.__menit = kedatangan.menit - self.__menit
+            selisih.__menit = kedatangan.__menit - self.__menit
 
-        if kedatangan.jam < self.__jam:
-            kedatangan.hari -= 1
-            selisih.__jam = 24 + kedatangan.jam - self.__jam
+        if kedatangan.__jam < self.__jam:
+            kedatangan.__hari -= 1
+            selisih.__jam = 24 + kedatangan.__jam - self.__jam
         else:
-            selisih.__jam = kedatangan.jam - self.__jam
+            selisih.__jam = kedatangan.__jam - self.__jam
 
-        if kedatangan.hari < self.__hari:
-            kedatangan.bulan -= 1
+        if kedatangan.__hari < self.__hari:
+            kedatangan.__bulan -= 1
             if self.__bulan == 2:
                 if (self.__tahun % 4 == 0 and self.__tahun % 100 != 0) or (self.__tahun % 400 == 0):
                     hari_bulan_ini = 29
@@ -80,17 +80,17 @@ class Waktu:
                 hari_bulan_ini = 31
             else:
                 hari_bulan_ini = 30
-            selisih.__hari = hari_bulan_ini + kedatangan.hari - self.__hari
+            selisih.__hari = hari_bulan_ini + kedatangan.__hari - self.__hari
         else:
-            selisih.__hari = kedatangan.hari - self.__hari
+            selisih.__hari = kedatangan.__hari - self.__hari
 
-        if kedatangan.bulan < self.__bulan:
-            kedatangan.tahun -= 1
-            selisih.__bulan = 12 + kedatangan.bulan - self.__bulan
+        if kedatangan.__bulan < self.__bulan:
+            kedatangan.__tahun -= 1
+            selisih.__bulan = 12 + kedatangan.__bulan - self.__bulan
         else:
-            selisih.__bulan = kedatangan.bulan - self.__bulan
+            selisih.__bulan = kedatangan.__bulan - self.__bulan
 
-        selisih.__tahun = kedatangan.tahun - self.__tahun
+        selisih.__tahun = kedatangan.__tahun - self.__tahun
 
         return selisih
 
