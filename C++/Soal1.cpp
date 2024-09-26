@@ -1,3 +1,11 @@
+/*
+ * Anggota Kelompok :
+ * - Wilson Angelie Tan (140810230024)
+ * - Stan Fedheric (140810230046)
+ * - Theopillus Samuel Ghozalli (140810230054)
+ * 
+ * Deskripsi : Soal 1 dalam Bahasa Pemograman C++
+ */
 #include <iostream>
 using namespace std;
 
@@ -17,7 +25,7 @@ class Waktu {
 
         void setNama() {
             cout << "Masukkan Nama : ";
-            cin >> nama;
+            getline(cin, nama);
         }
 
         void setNpm() {
