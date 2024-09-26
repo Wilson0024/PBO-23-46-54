@@ -6,12 +6,12 @@
  
 class Waktu:
     def __init__(self):
-        self.hari = 0
-        self.bulan = 0
-        self.tahun = 0
-        self.jam = 0
-        self.menit = 0
-        self.detik = 0
+        self.__hari = 0
+        self.__bulan = 0
+        self.__tahun = 0
+        self.__jam = 0
+        self.__menit = 0
+        self.__detik = 0
 
     def input_batas(self, pesan, min_val, max_val):
         while True:
@@ -23,79 +23,79 @@ class Waktu:
                 pass
 
     def set_tahun(self):
-        self.tahun = self.input_batas("Tahun: ", 0, 200000)
+        self.__tahun = self.input_batas("Tahun: ", 0, 200000)
 
     def set_bulan(self):
-        self.bulan = self.input_batas("Bulan (1-12): ", 1, 12)
+        self.__bulan = self.input_batas("Bulan (1-12): ", 1, 12)
 
     def set_hari(self):
-        if self.bulan == 2:
-            if (self.tahun % 4 == 0 and self.tahun % 100 != 0) or (self.tahun % 400 == 0):
-                self.hari = self.input_batas("Tanggal (1-29): ", 1, 29)
+        if self.__bulan == 2:
+            if (self.__tahun % 4 == 0 and self.__tahun % 100 != 0) or (self.__tahun % 400 == 0):
+                self.__hari = self.input_batas("Tanggal (1-29): ", 1, 29)
             else:
-                self.hari = self.input_batas("Tanggal (1-28): ", 1, 28)
-        elif (self.bulan % 2 == 1 and self.bulan <= 7) or (self.bulan % 2 == 0 and self.bulan >= 8):
-            self.hari = self.input_batas("Tanggal (1-31): ", 1, 31)
+                self.__hari = self.input_batas("Tanggal (1-28): ", 1, 28)
+        elif (self.__bulan % 2 == 1 and self.__bulan <= 7) or (self.__bulan % 2 == 0 and self.__bulan >= 8):
+            self.__hari = self.input_batas("Tanggal (1-31): ", 1, 31)
         else:
-            self.hari = self.input_batas("Tanggal (1-30): ", 1, 30)
+            self.__hari = self.input_batas("Tanggal (1-30): ", 1, 30)
 
     def set_jam(self):
-        self.jam = self.input_batas("Masukkan Jam (0-23): ", 0, 23)
+        self.__jam = self.input_batas("Masukkan Jam (0-23): ", 0, 23)
 
     def set_menit(self):
-        self.menit = self.input_batas("Masukkan Menit (0-59): ", 0, 59)
+        self.__menit = self.input_batas("Masukkan Menit (0-59): ", 0, 59)
 
     def set_detik(self):
-        self.detik = self.input_batas("Masukkan Detik (0-59): ", 0, 59)
+        self.__detik = self.input_batas("Masukkan Detik (0-59): ", 0, 59)
 
     def selisih_waktu(self, kedatangan):
         selisih = Waktu()
 
-        if kedatangan.detik < self.detik:
+        if kedatangan.detik < self.__detik:
             kedatangan.menit -= 1
-            selisih.detik = 60 + kedatangan.detik - self.detik
+            selisih.__detik = 60 + kedatangan.detik - self.__detik
         else:
-            selisih.detik = kedatangan.detik - self.detik
+            selisih.__detik = kedatangan.detik - self.__detik
 
-        if kedatangan.menit < self.menit:
+        if kedatangan.menit < self.__menit:
             kedatangan.jam -= 1
-            selisih.menit = 60 + kedatangan.menit - self.menit
+            selisih.__menit = 60 + kedatangan.menit - self.__menit
         else:
-            selisih.menit = kedatangan.menit - self.menit
+            selisih.__menit = kedatangan.menit - self.__menit
 
-        if kedatangan.jam < self.jam:
+        if kedatangan.jam < self.__jam:
             kedatangan.hari -= 1
-            selisih.jam = 24 + kedatangan.jam - self.jam
+            selisih.__jam = 24 + kedatangan.jam - self.__jam
         else:
-            selisih.jam = kedatangan.jam - self.jam
+            selisih.__jam = kedatangan.jam - self.__jam
 
-        if kedatangan.hari < self.hari:
+        if kedatangan.hari < self.__hari:
             kedatangan.bulan -= 1
-            if self.bulan == 2:
-                if (self.tahun % 4 == 0 and self.tahun % 100 != 0) or (self.tahun % 400 == 0):
+            if self.__bulan == 2:
+                if (self.__tahun % 4 == 0 and self.__tahun % 100 != 0) or (self.__tahun % 400 == 0):
                     hari_bulan_ini = 29
                 else:
                     hari_bulan_ini = 28
-            elif (self.bulan % 2 == 1 and self.bulan <= 7) or (self.bulan % 2 == 0 and self.bulan >= 8):
+            elif (self.__bulan % 2 == 1 and self.__bulan <= 7) or (self.__bulan % 2 == 0 and self.__bulan >= 8):
                 hari_bulan_ini = 31
             else:
                 hari_bulan_ini = 30
-            selisih.hari = hari_bulan_ini + kedatangan.hari - self.hari
+            selisih.__hari = hari_bulan_ini + kedatangan.hari - self.__hari
         else:
-            selisih.hari = kedatangan.hari - self.hari
+            selisih.__hari = kedatangan.hari - self.__hari
 
-        if kedatangan.bulan < self.bulan:
+        if kedatangan.bulan < self.__bulan:
             kedatangan.tahun -= 1
-            selisih.bulan = 12 + kedatangan.bulan - self.bulan
+            selisih.__bulan = 12 + kedatangan.bulan - self.__bulan
         else:
-            selisih.bulan = kedatangan.bulan - self.bulan
+            selisih.__bulan = kedatangan.bulan - self.__bulan
 
-        selisih.tahun = kedatangan.tahun - self.tahun
+        selisih.__tahun = kedatangan.tahun - self.__tahun
 
         return selisih
 
     def tampilkan(self):
-        print(f"{self.tahun} tahun {self.bulan} bulan {self.hari} hari {self.jam} jam {self.menit} menit {self.detik} detik")
+        print(f"{self.__tahun} tahun {self.__bulan} bulan {self.__hari} hari {self.__jam} jam {self.__menit} menit {self.__detik} detik")
 
 
 if __name__ == "__main__":
