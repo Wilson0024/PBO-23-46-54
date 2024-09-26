@@ -169,6 +169,8 @@ class Waktu{
 
     // output untuk lama perjalanan dengan hanya menampilkan yang tidak nol
     public void lamaPerjalanan(){
+        System.out.print("Lama Perjalanan : ");
+        
         if (this.tahun != 0){
             System.out.print(this.tahun + " tahun ");
         }
