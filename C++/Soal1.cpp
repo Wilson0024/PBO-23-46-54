@@ -25,7 +25,7 @@ class Waktu {
 
         void setNama() {
             cout << "Masukkan Nama : ";
-            cin >> nama;
+            getline(cin, nama);
         }
 
         void setNpm() {
