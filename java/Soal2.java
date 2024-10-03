@@ -8,22 +8,16 @@
  */
 import java.util.Scanner;
 
-class Waktu{
+class Date{
     static Scanner sc = new Scanner(System.in);
     private int tanggal;
     private int bulan;
     private int tahun;
-    private int jam;
-    private int detik;
-    private int menit;
 
-    public Waktu(){
+    public Date(){
         this.tanggal = 0;
         this.bulan = 0;
         this.tahun = 0;
-        this.jam = 0;
-        this.detik = 0;
-        this.menit = 0;
     }
 
     public int inputBatas(String kata, int min, int max){
@@ -44,7 +38,7 @@ class Waktu{
         this.bulan = inputBatas("Bulan (1-12): ", 1, 12);
     }
 
-    public void settanggal(){
+    public void setTanggal(){
         if(this.bulan == 2){
             if((this.tahun % 4 == 0 && this.tahun % 100 != 0) || (this.tahun % 400 == 0)){
                 this.tanggal = inputBatas("tanggal (1-29) : ", 1, 29);
@@ -60,7 +54,54 @@ class Waktu{
             this.tanggal = inputBatas("tanggal (1-30) : ", 1, 30); 
         }
     }
-     
+
+    public void setBulan(int bulan) {
+        this.bulan = bulan;
+    }
+
+    public void setTahun(int tahun) {
+        this.tahun = tahun;
+    }
+
+    public void setTanggal(int tanggal) {
+        this.tanggal = tanggal;
+    }
+
+    public int getTahun() {
+        return this.tahun;
+    }
+
+    public int getBulan() {
+        return this.bulan;
+    }
+
+    public int getTanggal() {
+        return this.tanggal;
+    }
+}
+
+class Time{
+    static Scanner sc = new Scanner(System.in);
+    private int jam;
+    private int detik;
+    private int menit;
+
+    public Time(){
+        this.jam = 0;
+        this.detik = 0;
+        this.menit = 0;
+    }
+
+    public int inputBatas(String kata, int min, int max){
+        int data;
+        do{
+            System.out.print(kata);
+            data = Integer.parseInt(sc.nextLine());
+        }
+        while(data < min || data > max);
+        return data;
+    }
+
     public void setJam(){
         this.jam = inputBatas("Masukkan Jam (0-23): ", 0, 23);
     }
@@ -72,18 +113,21 @@ class Waktu{
     public void setDetik(){
         this.detik = inputBatas("Masukkan Detik (0-59): ", 0, 59);
     }
-    
 
-    public int getBulan() {
-        return this.bulan;
+    public void setDetik(int detik) {
+        this.detik = detik;
     }
 
+    public void setJam(int jam) {
+        this.jam = jam;
+    }
+
+    public void setMenit(int menit) {
+        this.menit = menit;
+    }    
+    
     public int getDetik() {
         return this.detik;
-    }
-
-    public int gettanggal() {
-        return this.tanggal;
     }
 
     public int getJam() {
@@ -94,133 +138,180 @@ class Waktu{
         return this.menit;
     }
 
-    public int getTahun() {
-        return this.tahun;
+}
+
+class Waktu{
+    static Scanner sc = new Scanner(System.in);
+    private Time time;
+    private Date date;
+
+    public Waktu(){
+        this.time = new Time();
+        this.date = new Date();
+    }
+
+    public int inputBatas(String kata, int min, int max){
+        int data;
+        do{
+            System.out.print(kata);
+            data = Integer.parseInt(sc.nextLine());
+        }
+        while(data < min || data > max);
+        return data;
+    }
+
+    public void setTime(String s){
+        System.out.println("\n\n\t" + s);
+        System.out.println("=======================");
+
+        time.setJam();
+        time.setMenit();
+        time.setDetik();
+    }
+
+    public void setDate(String s){
+        System.out.println("\n\n\t" + s);
+        System.out.println("=======================");
+
+        date.setTahun();
+        date.setBulan();
+        date.setTanggal();
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public int getDaysInMonth(int bulan, int tahun) {
+        switch (bulan) {
+            case 2:
+                if ((tahun % 4 == 0 && tahun % 100 != 0) || (tahun % 400 == 0)) {
+                    return 29; // Februari pada tahun kabisat
+                } else {
+                    return 28; // Februari pada tahun biasa
+                }
+            case 4: case 6: case 9: case 11:
+                return 30; // Bulan dengan 30 hari
+            default:
+                return 31; // Bulan dengan 31 hari
+        }
     }
 
     public Waktu selisihWaktu(Waktu kedatangan) {
         Waktu selisih = new Waktu();
-
-        // Selisih Detik
-        if (kedatangan.detik < this.detik) {
-            selisih.menit -= 1;
-            selisih.detik += 60 + kedatangan.detik - this.detik;
-        } else {
-            selisih.detik += kedatangan.detik - this.detik;
+        
+        // Hitung selisih detik
+        int selisihDetik = kedatangan.getTime().getDetik() - this.getTime().getDetik();
+        if (selisihDetik < 0) {
+            selisihDetik += 60;
+            kedatangan.getTime().setMenit(kedatangan.getTime().getMenit() - 1);
         }
-
-        // Selisih Menit
-        if (kedatangan.menit + selisih.menit < this.menit) {
-            selisih.jam -= 1;
-            selisih.menit += 60 + kedatangan.menit - this.menit;
-        } else {
-            selisih.menit += kedatangan.menit - this.menit;
+        selisih.getTime().setDetik(selisihDetik);
+    
+        // Hitung selisih menit
+        int selisihMenit = kedatangan.getTime().getMenit() - this.getTime().getMenit();
+        if (selisihMenit < 0) {
+            selisihMenit += 60;
+            kedatangan.getTime().setJam(kedatangan.getTime().getJam() - 1);
         }
-
-        // Selisih Jam
-        if (kedatangan.jam + selisih.jam < this.jam) {
-            selisih.tanggal -= 1;
-            selisih.jam += 24 + kedatangan.jam - this.jam;
-        } else {
-            selisih.jam += kedatangan.jam - this.jam;
+        selisih.getTime().setMenit(selisihMenit);
+    
+        // Hitung selisih jam
+        int selisihJam = kedatangan.getTime().getJam() - this.getTime().getJam();
+        if (selisihJam < 0) {
+            selisihJam += 24;
+            kedatangan.getDate().setTanggal(kedatangan.getDate().getTanggal() - 1);
         }
-
-        // Selisih tanggal
-        // Bulan Kedatangan + 1 supaya dapat mengambil banyak tanggal dalam bulan kedua pada tahun tertentu
-        if(kedatangan.bulan == 3){
-            // Bulan kedua pada saat tahun kabisat
-            if((kedatangan.tahun % 4 == 0 && kedatangan.tahun % 100 != 0) || (kedatangan.tahun % 400 == 0) && (kedatangan.tanggal + selisih.tanggal < this.tanggal)){
-                selisih.bulan -= 1;
-                selisih.tanggal += 29 + kedatangan.tanggal - this.tanggal;
-            } 
-            // Bulan kedua pada biasanya
-            else{
-                selisih.bulan -= 1;
-                selisih.tanggal += 28 + kedatangan.tanggal - this.tanggal;
-            }
-        } 
-        // Mencari 31 tanggal pada bulan tertentu (1,3,5,7,8,10,12)
-        else if((kedatangan.bulan % 2 == 0 && kedatangan.bulan <= 7) || (kedatangan.bulan % 2 == 1 && kedatangan.bulan <= 12 && (kedatangan.bulan > 7 || kedatangan.bulan == 1)) && (kedatangan.tanggal + selisih.tanggal < this.tanggal)){
-            selisih.bulan -= 1;
-            selisih.tanggal += 31 + kedatangan.tanggal - this.tanggal;
-        } 
-        // Mencari 30 tanggal pada bulan tertentu (4,6,9,11)
-        else if(kedatangan.tanggal + selisih.tanggal < this.tanggal){
-            selisih.bulan -= 1;
-            selisih.tanggal += 30 + kedatangan.tanggal - this.tanggal; 
+        selisih.getTime().setJam(selisihJam);
+    
+        // Hitung selisih tanggal
+        int daysInMonth = getDaysInMonth(kedatangan.getDate().getBulan(), kedatangan.getDate().getTahun());
+        int selisihTanggal = kedatangan.getDate().getTanggal() - this.getDate().getTanggal();
+        if (selisihTanggal < 0) {
+            selisihTanggal += daysInMonth;
+            kedatangan.getDate().setBulan(kedatangan.getDate().getBulan() - 1);
         }
-        else {
-            selisih.tanggal += kedatangan.tanggal - this.tanggal;
-        }        
-
-        // Selisih Bulan
-        if (kedatangan.bulan + selisih.bulan < this.bulan) {
-            selisih.tahun -= 1;
-            selisih.bulan += 12 + kedatangan.bulan - this.bulan;
-        } else {
-            selisih.bulan += kedatangan.bulan - this.bulan;
+        selisih.getDate().setTanggal(selisihTanggal);
+    
+        // Hitung selisih bulan
+        int selisihBulan = kedatangan.getDate().getBulan() - this.getDate().getBulan();
+        if (selisihBulan < 0) {
+            selisihBulan += 12;
+            kedatangan.getDate().setTahun(kedatangan.getDate().getTahun() - 1);
         }
-
-        // Selisih Tahun
-        selisih.tahun += kedatangan.tahun - this.tahun;
-
+        selisih.getDate().setBulan(selisihBulan);
+    
+        // Hitung selisih tahun
+        int selisihTahun = kedatangan.getDate().getTahun() - this.getDate().getTahun();
+        selisih.getDate().setTahun(selisihTahun);
+    
         return selisih;
     }
+    
+    
+}
 
-    // output untuk lama perjalanan dengan hanya menampilkan yang tidak nol
-    public void lamaPerjalanan(){
-        System.out.print("\nLama Perjalanan : ");
-        
-        if (this.tahun != 0){
-            System.out.print(this.tahun + " tahun ");
+class Perjalanan {
+    private Waktu keberangkatan;
+    private Waktu kedatangan;
+    private Waktu selisih;
+
+    public Perjalanan(Waktu keberangkatan, Waktu kedatangan) {
+        this.keberangkatan = keberangkatan;
+        this.kedatangan = kedatangan;
+        this.selisih = keberangkatan.selisihWaktu(kedatangan);
+    }
+
+    public void lamaPerjalanan() {
+        // Akses date dan time melalui getter
+        int tahun = selisih.getDate().getTahun();
+        int bulan = selisih.getDate().getBulan();
+        int tanggal = selisih.getDate().getTanggal();
+        int jam = selisih.getTime().getJam();
+        int menit = selisih.getTime().getMenit();
+        int detik = selisih.getTime().getDetik();
+    
+        System.out.print("\nLama Perjalanan: ");
+    
+        if (tahun != 0) {
+            System.out.print(tahun + " tahun ");
         }
-        
-        if (this.bulan != 0){
-            System.out.print(this.bulan + " bulan ");
+        if (bulan != 0) {
+            System.out.print(bulan + " bulan ");
         }
-        
-        if (this.tanggal != 0){
-            System.out.print(this.tanggal + " Hari ");
+        if (tanggal != 0) {
+            System.out.print(tanggal + " hari ");
         }
-        
-        if (this.jam != 0){
-            System.out.print(this.jam + " jam ");
+        if (jam != 0) {
+            System.out.print(jam + " jam ");
         }
-        
-        if (this.menit != 0){
-            System.out.print(this.menit + " menit ");
+        if (menit != 0) {
+            System.out.print(menit + " menit ");
         }
-        
-        if (this.detik != 0){
-            System.out.print(this.detik + " detik");
+        if (detik != 0) {
+            System.out.print(detik + " detik");
         }
+        System.out.println();
     }
 }
 
+
 public class Soal2{
     public static void main(String[] args) {
-        Waktu berangkat = new Waktu();
+        Waktu keberangkatan = new Waktu();
         Waktu kedatangan = new Waktu();
-        Waktu selisih = new Waktu();
 
-        System.out.println("Berangkat : ");
-        berangkat.setTahun();
-        berangkat.setBulan();
-        berangkat.settanggal();
-        berangkat.setJam();
-        berangkat.setMenit();
-        berangkat.setDetik();
+        keberangkatan.setDate("Tanggal berangkat");
+        keberangkatan.setTime("Waktu berangkat");
 
-        System.out.println("\nkedatangan : ");
-        kedatangan.setTahun();
-        kedatangan.setBulan();
-        kedatangan.settanggal();
-        kedatangan.setJam();
-        kedatangan.setMenit();
-        kedatangan.setDetik();
+        kedatangan.setDate("Tanggal Kedatangan");
+        kedatangan.setTime("Waktu Kedatangan");
 
-        selisih = berangkat.selisihWaktu(kedatangan);
-        selisih.lamaPerjalanan();
-        Waktu.sc.close();
+        Perjalanan perjalanan = new Perjalanan(keberangkatan, kedatangan);
+        perjalanan.lamaPerjalanan();
     }
 }
