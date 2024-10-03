@@ -1,9 +1,9 @@
- # Anggota Kelompok :
- # - Wilson Angelie Tan (140810230024)
- # - Stan Fedheric (140810230046)
- # - Theopillus Samuel Ghozalli (140810230054) 
- # Deskripsi : Soal 2 dalam Bahasa Pemograman Python
- 
+# Anggota Kelompok :
+# - Wilson Angelie Tan (140810230024)
+# - Stan Fedheric (140810230046)
+# - Theopillus Samuel Ghozalli (140810230054) 
+# Deskripsi : Soal 2 dalam Bahasa Pemograman Python
+
 class Waktu:
     def __init__(self):
         self.__hari = 0
