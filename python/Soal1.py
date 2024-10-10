@@ -120,5 +120,5 @@ def Menu():
     dataMhs.tampilan() # tampilan output
 
 
-if __name__ == "__main__":
-    Menu()
+
+Menu()

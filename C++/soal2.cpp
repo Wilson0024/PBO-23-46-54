@@ -4,142 +4,323 @@
  * - Stan Fedheric (140810230046)
  * - Theopillus Samuel Ghozalli (140810230054)
  * 
- * Deskripsi : Soal 2 dalam Bahasa Pemograman C++
+ * Deskripsi : Soal 2 dalam Bahasa Pemrograman C++
  */
 
 #include <iostream>
+#include <string>
+
 using namespace std;
 
-class Waktu {
+class Date {
 private:
-    int hari, bulan, tahun, jam, menit, detik;
+    int tanggal;
+    int bulan;
+    int tahun;
 
 public:
-    Waktu() : hari(0), bulan(0), tahun(0), jam(0), menit(0), detik(0) {}
+    Date() {
+        this->tanggal = 0;
+        this->bulan = 0;
+        this->tahun = 0;
+    }
 
-    int inputBatas(string pesan, int min, int max) {
+    int inputBatas(string kata, int min, int max) {
         int data;
         do {
-            cout << pesan;
+            cout << kata;
             cin >> data;
         } while (data < min || data > max);
         return data;
     }
 
     void setTahun() {
-        tahun = inputBatas("Tahun: ", 0, 200000);
+        this->tahun = inputBatas("Tahun : ", 0, 200000);
     }
 
     void setBulan() {
-        bulan = inputBatas("Bulan (1-12): ", 1, 12);
+        this->bulan = inputBatas("Bulan (1-12): ", 1, 12);
     }
 
-    void setHari() {
-        if (bulan == 2) {
-            if ((tahun % 4 == 0 && tahun % 100 != 0) || (tahun % 400 == 0)) {
-                hari = inputBatas("Hari (1-29): ", 1, 29);
+    void setTanggal() {
+        if (this->bulan == 2) {
+            if ((this->tahun % 4 == 0 && this->tahun % 100 != 0) || (this->tahun % 400 == 0)) {
+                this->tanggal = inputBatas("tanggal (1-29) : ", 1, 29);
             } else {
-                hari = inputBatas("Hari (1-28): ", 1, 28);
+                this->tanggal = inputBatas("tanggal (1-28) : ", 1, 28);
             }
-        } else if ((bulan % 2 == 1 && bulan <= 7) || (bulan % 2 == 0 && bulan >= 8)) {
-            hari = inputBatas("Hari (1-31): ", 1, 31);
+        } else if ((this->bulan % 2 == 1 && this->bulan <= 7) || (this->bulan % 2 == 0 && this->bulan <= 12 && this->bulan > 7)) {
+            this->tanggal = inputBatas("tanggal (1-31) : ", 1, 31);
         } else {
-            hari = inputBatas("Hari (1-30): ", 1, 30);
+            this->tanggal = inputBatas("tanggal (1-30) : ", 1, 30);
         }
+    }
+
+    void setBulan(int bulan) {
+        this->bulan = bulan;
+    }
+
+    void setTahun(int tahun) {
+        this->tahun = tahun;
+    }
+
+    void setTanggal(int tanggal) {
+        this->tanggal = tanggal;
+    }
+
+    int getTahun() {
+        return this->tahun;
+    }
+
+    int getBulan() {
+        return this->bulan;
+    }
+
+    int getTanggal() {
+        return this->tanggal;
+    }
+};
+
+class Time {
+private:
+    int jam;
+    int detik;
+    int menit;
+
+public:
+    Time() {
+        this->jam = 0;
+        this->detik = 0;
+        this->menit = 0;
+    }
+
+    int inputBatas(string kata, int min, int max) {
+        int data;
+        do {
+            cout << kata;
+            cin >> data;
+        } while (data < min || data > max);
+        return data;
     }
 
     void setJam() {
-        jam = inputBatas("Masukkan Jam (0-23): ", 0, 23);
+        this->jam = inputBatas("Masukkan Jam (0-23): ", 0, 23);
     }
 
     void setMenit() {
-        menit = inputBatas("Masukkan Menit (0-59): ", 0, 59);
+        this->menit = inputBatas("Masukkan Menit (0-59): ", 0, 59);
     }
 
     void setDetik() {
-        detik = inputBatas("Masukkan Detik (0-59): ", 0, 59);
+        this->detik = inputBatas("Masukkan Detik (0-59): ", 0, 59);
     }
 
-    Waktu selisihWaktu(Waktu kedatangan) {
-        Waktu selisih;
+    void setDetik(int detik) {
+        this->detik = detik;
+    }
 
-        if (kedatangan.detik < detik) {
-            kedatangan.menit--;
-            selisih.detik = 60 + kedatangan.detik - detik;
-        } else {
-            selisih.detik = kedatangan.detik - detik;
-        }
+    void setJam(int jam) {
+        this->jam = jam;
+    }
 
-        if (kedatangan.menit < menit) {
-            kedatangan.jam--;
-            selisih.menit = 60 + kedatangan.menit - menit;
-        } else {
-            selisih.menit = kedatangan.menit - menit;
-        }
+    void setMenit(int menit) {
+        this->menit = menit;
+    }
 
-        if (kedatangan.jam < jam) {
-            kedatangan.hari--;
-            selisih.jam = 24 + kedatangan.jam - jam;
-        } else {
-            selisih.jam = kedatangan.jam - jam;
-        }
+    int getDetik() {
+        return this->detik;
+    }
 
-        if (kedatangan.hari < hari) {
-            kedatangan.bulan--;
-            if (kedatangan.bulan == 2) {
-                if ((kedatangan.tahun % 4 == 0 && kedatangan.tahun % 100 != 0) || (kedatangan.tahun % 400 == 0)) {
-                    kedatangan.hari += 29;
+    int getJam() {
+        return this->jam;
+    }
+
+    int getMenit() {
+        return this->menit;
+    }
+};
+
+class Waktu {
+private:
+    Time time;
+    Date date;
+
+public:
+    Waktu() {
+        this->time = Time();
+        this->date = Date();
+    }
+
+    int inputBatas(string kata, int min, int max) {
+        int data;
+        do {
+            cout << kata;
+            cin >> data;
+        } while (data < min || data > max);
+        return data;
+    }
+
+    void setTime(string s) {
+        cout << "\n\n\t" << s << endl;
+        cout << "=======================" << endl;
+
+        time.setJam();
+        time.setMenit();
+        time.setDetik();
+    }
+
+    void setDate(string s) {
+        cout << "\n\n\t" << s << endl;
+        cout << "=======================" << endl;
+
+        date.setTahun();
+        date.setBulan();
+        date.setTanggal();
+    }
+
+    void setTime(Time time){
+        this->time = time;
+    }
+
+    void setDate(Date date){
+        this->date = date;
+    }
+
+    Date getDate() {
+        return date;
+    }
+
+    Time getTime() {
+        return time;
+    }
+
+    int getDaysInMonth(int bulan, int tahun) {
+        switch (bulan) {
+            case 2:
+                if ((tahun % 4 == 0 && tahun % 100 != 0) || (tahun % 400 == 0)) {
+                    return 29; // Februari pada tahun kabisat
                 } else {
-                    kedatangan.hari += 28;
+                    return 28; // Februari pada tahun biasa
                 }
-            } else if ((kedatangan.bulan % 2 == 1 && kedatangan.bulan <= 7) || (kedatangan.bulan % 2 == 0 && kedatangan.bulan >= 8)) {
-                kedatangan.hari += 31;
-            } else {
-                kedatangan.hari += 30;
-            }
+            case 4: case 6: case 9: case 11:
+                return 30; // Bulan dengan 30 hari
+            default:
+                return 31; // Bulan dengan 31 hari
         }
-        selisih.hari = kedatangan.hari - hari;
-
-        if (kedatangan.bulan < bulan) {
-            kedatangan.tahun--;
-            kedatangan.bulan += 12;
-        }
-        selisih.bulan = kedatangan.bulan - bulan;
-
-        selisih.tahun = kedatangan.tahun - tahun;
-
-        return selisih;
     }
 
-    void tampilkanSelisih() {
-        cout << tahun << " tahun " << bulan << " bulan " << hari << " hari "
-             << jam << " jam " << menit << " menit " << detik << " detik" << endl;
+Waktu selisihWaktu(Waktu& kedatangan) {
+    Waktu selisih;
+
+    // Hitung selisih detik
+    int selisihDetik = kedatangan.getTime().getDetik() - getTime().getDetik();
+    if (selisihDetik < 0) {
+        selisihDetik += 60;
+        kedatangan.time.setMenit(kedatangan.getTime().getMenit() - 1);
+    }
+    selisih.time.setDetik(selisihDetik);
+
+    // Hitung selisih menit
+    int selisihMenit = kedatangan.getTime().getMenit() - getTime().getMenit();
+    if (selisihMenit < 0) {
+        selisihMenit += 60;
+        kedatangan.time.setJam(kedatangan.getTime().getJam() - 1);
+    }
+    selisih.time.setMenit(selisihMenit);
+
+    // Hitung selisih jam
+    int selisihJam = kedatangan.getTime().getJam() - getTime().getJam();
+    if (selisihJam < 0) {
+        selisihJam += 24;
+        kedatangan.date.setTanggal(kedatangan.getDate().getTanggal() - 1);
+    }
+    selisih.time.setJam(selisihJam);
+
+    // Hitung selisih tanggal
+    int selisihTanggal = kedatangan.getDate().getTanggal() - getDate().getTanggal();
+    int daysInPrevMonth = getDaysInMonth(kedatangan.getDate().getBulan() - 1 == 0 ? 12 : kedatangan.getDate().getBulan() - 1, kedatangan.getDate().getTahun());
+
+    if (selisihTanggal < 0) {
+        selisihTanggal += daysInPrevMonth;
+        kedatangan.date.setBulan(kedatangan.getDate().getBulan() - 1);
+    }
+    selisih.date.setTanggal(selisihTanggal);
+
+    // Hitung selisih bulan
+    int selisihBulan = kedatangan.getDate().getBulan() - getDate().getBulan();
+    if (selisihBulan < 0) {
+        selisihBulan += 12;
+        kedatangan.date.setTahun(kedatangan.getDate().getTahun() - 1);
+    }
+    selisih.date.setBulan(selisihBulan);
+
+    // Hitung selisih tahun
+    int selisihTahun = kedatangan.getDate().getTahun() - getDate().getTahun();
+    selisih.date.setTahun(selisihTahun);
+
+    return selisih;
+}
+
+};
+
+class Perjalanan {
+private:
+    Waktu keberangkatan;
+    Waktu kedatangan;
+    Waktu selisih;
+
+public:
+    Perjalanan(Waktu keberangkatan, Waktu kedatangan) {
+        this->keberangkatan = keberangkatan;
+        this->kedatangan = kedatangan;
+        this->selisih = keberangkatan.selisihWaktu(kedatangan);
+    }
+
+        void lamaPerjalanan() {
+        // Akses date dan time melalui getter
+        int tahun = selisih.getDate().getTahun();
+        int bulan = selisih.getDate().getBulan();
+        int tanggal = selisih.getDate().getTanggal();
+        int jam = selisih.getTime().getJam();
+        int menit = selisih.getTime().getMenit();
+        int detik = selisih.getTime().getDetik();
+
+        cout << "\nLama Perjalanan: ";
+
+        if (tahun != 0) {
+            cout << tahun << " tahun ";
+        }
+        if (bulan != 0) {
+            cout << bulan << " bulan ";
+        }
+        if (tanggal != 0) {
+            cout << tanggal << " hari ";
+        }
+        if (jam != 0) {
+            cout << jam << " jam ";
+        }
+        if (menit != 0) {
+            cout << menit << " menit ";
+        }
+        if (detik != 0) {
+            cout << detik << " detik";
+        }
+
+        cout << endl;
     }
 };
 
 int main() {
-    Waktu t1, t2, selisih;
+    Waktu waktuKeberangkatan, waktuKedatangan;
 
-    cout << "Berangkat:\n";
-    t1.setTahun();
-    t1.setBulan();
-    t1.setHari();
-    t1.setJam();
-    t1.setMenit();
-    t1.setDetik();
+    waktuKeberangkatan.setDate("Tanggal Keberangkatan");
+    waktuKeberangkatan.setTime("Waktu Keberangkatan");
 
-    cout << "\nKedatangan:\n";
-    t2.setTahun();
-    t2.setBulan();
-    t2.setHari();
-    t2.setJam();
-    t2.setMenit();
-    t2.setDetik();
+    waktuKedatangan.setDate("Tanggal Kedatangan");
+    waktuKedatangan.setTime("Waktu Kedatangan");
 
-    selisih = t1.selisihWaktu(t2);
+    Perjalanan perjalanan(waktuKeberangkatan, waktuKedatangan);
 
-    cout << "\nLama Perjalanan:\n";
-    selisih.tampilkanSelisih();
-
-    return 0;
+    perjalanan.lamaPerjalanan();
 }
+
